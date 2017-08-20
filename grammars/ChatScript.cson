@@ -4,64 +4,63 @@ fileTypes: [
 	"tst"
 ]
 name: "ChatScript"
+uuid: "217a687b-ce56-4078-8034-5b1303f17a77"
 scopeName: "source.top"
 patterns: [
 	{
-		name: "constant.numeric.ChatScript"
-		match: "(\\%)(?i:(date|daynumber|fulltime|timenumbers|leapyear|daylightsavings|minute|month|monthname|second|volleytime|week|year|rand|zulutime|day|time))"
 		comment: "System variables (date & time & numbers)"
+		name: "constant.numeric.ChatScript"
+		match: "(\\%)(date|day|daynumber|fulltime|hour|timenumbers|leapyear|daylightsavings|minute|month|monthname|second|volleytime|time|week|year|zulutime)"
 	}
 	{
-		name: "constant.numeric.ChatScript"
-		match: "(\\%)(?i:(inputrejoinder|bot|revisedinput|command|foreign|impliedyou|input|ip|length|more|morequestion|originalinput|originalsentence|parsed|question|quotation|sentence|tense|userfirstline|user|userinput|voice))"
 		comment: "System variables (user input)"
+		name: "constant.numeric.ChatScript"
+		match: "(\\%)(bot|revisedinput|command|foreign|impliedyou|input|ip|language|length|more|morequestion|originalinput|originalsentence|parsed|question|quotation|sentence|tense|tokenflags|userfirstline|user|userinput|voice|rand)"
 	}
 	{
-		name: "constant.numeric.ChatScript"
-		match: "(\\%)(?i:(httpresponse|response|all|document|fact|freetext|freedict|freefact|maxmatchvariables|maxfactsets|host|regression|server|rule|topic|actualtopic|trace|outputrejoinder|lastquestion))"
 		comment: "System variables (chatbot output)"
+		name: "constant.numeric.ChatScript"
+		match: "(\\%)(inputrejoinder|lastoutput|lastquestion|outputrejoinder|response|all|crosstalk|document|fact|freetext|freedict|freefact|freeword|maxmatchvariables|maxfactsets|host|regression|server|rule|topic|actualtopic|trace|httpresponse|pid|restart|timeout)"
 	}
 	{
-		name: "constant.numeric.ChatScript"
-		match: "(\\%)(?i:(dict|engine|os|script|version|pid|restart|language))"
 		comment: "System variables (build data)"
-	}
-	{
 		name: "constant.numeric.ChatScript"
-		match: "(\\$)(?i:(cs_afterreset|cs_beforereset|cs_token|cs_response|cs_jsontimeout|cs_crashmsg|cs_abstract|cs_looplimit|cs_trace|cs_control_pre|cs_prepass|cs_control_main|cs_control_post|botprompt|userprompt|cs_crashmsg|cs_language|cs_token|cs_abstract|cs_prepass|cs_wildcardseparator|cs_userfactlimit|cs_response|cs_randindex|cs_utcoffset|cs_randindex|cs_bot|cs_login|\\$db_error|\\$findtext_start|\\$tcpopen_error|\\$document|cs_externaltag|cs_usermessagelimit|\\$findtext_word|\\$csmatch_start|\\$csmatch_end|cs_botid))"
-		comment: "Interchange variables"
+		match: "(\\%)(dict|engine|os|script|version)"
 	}
 	{
-		name: "constant.language.ChatScript"
-		match: "(\\s*)(\\'?)(_\\d+)\\b"
+		comment: "Interchange variables"
+		name: "constant.numeric.ChatScript"
+		match: "(\\$)(cs_afterreset|cs_beforereset|cs_token|cs_response|cs_jsontimeout|cs_crashmsg|cs_abstract|cs_looplimit|cs_trace|cs_control_pre|cs_prepass|cs_control_main|cs_control_post|cs_usermessagelimit|cs_externaltag|botprompt|userprompt|cs_language|cs_wildcardseparator|cs_userfactlimit|cs_randindex|cs_utcoffset|cs_bot|cs_login|cs_fullfloat|cs_botid|cs_numbers|cs_topicretrylimit|cs_saveusedjson|cs_proxycredentials|cs_proxyserver|cs_proxymethod|\\$db_error|\\$findtext_start|\\$findtext_word|\\$tcpopen_error|\\$document|\\$csmatch_start|\\$csmatch_end|\\$topic_retry_limit_exceeded)"
+	}
+	{
 		comment: "Input capture variables"
 		captures:
 			"2":
 				name: "keyword.numeric.ChatScript"
 			"3":
 				name: "constant.language.ChatScript"
+		name: "constant.language.ChatScript"
+		match: "(\\s*)(\\'?)(_\\d+)"
 	}
 	{
+		comment: "Position variable"
 		name: "constant.language.ChatScript"
 		match: "@[\\w,\\d,\\-,_]+[\\-,\\+]?"
-		comment: "Position variable"
 	}
 	{
+		comment: "User transient variables"
 		name: "variable.parameter.ChatScript"
 		match: "\\$\\$\\w+"
-		comment: "User transient variables"
 	}
 	{
-		name: "none.ChatScript"
-		match: "(\\$[a-zA-Z\\d_-]+)(\\.[\\w$-]+)?"
 		comment: "User variables"
-		captures:
-			"1":
-				name: "variable.parameter.ChatScript"
-			"2":
-				name: "none.ChatScript"
+		name: "variable.parameter.ChatScript∫∫"
+		match: "\\$[a-z,A-Z,\\d,\\-,_]+"
 	}
 	{
+		begin: "((if|else\\sif)(?:\\s*)(?=\\(+))|(else\\s*)(?=\\{|\\n)"
+		end: "\\)"
+		name: "none.ChatScript"
 		comment: "Execution flow"
 		patterns: [
 			{
@@ -69,97 +68,96 @@ patterns: [
 			}
 			{
 				name: "keyword.numeric.ChatScript"
-				match: "(\\!|==|\\b(AND|OR)\\b|>=|<=|!=|>|<|\\?)"
+				match: "(\\!|==|\\s(AND|OR)\\s|>=|<=|\\!=|>|<|\\?)"
 			}
 		]
-		begin: '''
-			((if|else\\sif)(?:\\s*)(?=\\(+))|(else)(?:\\s*)(?=\\{|
-			)
-		'''
 		beginCaptures:
-			"2":
+			"1":
 				name: "keyword.numeric.ChatScript"
 			"3":
 				name: "keyword.numeric.ChatScript"
-		end: "\\)"
-		name: "none.ChatScript"
+			"5":
+				name: "keyword.numeric.ChatScript"
 	}
 	{
-		name: "constant.numeric.ChatScript"
-		match: "(?<!_)\\-?\\d+(?![\\w\\-+?&])\\b"
 		comment: "Integers"
-	}
-	{
 		name: "constant.numeric.ChatScript"
-		match: "\\b(null|true|false)\\b[^\"-=\\$%&\\?]"
+		match: "\\d+"
+	}
+	{
 		comment: "Boolean & state"
+		name: "constant.numeric.ChatScript"
+		match: "\\s(null|true|false)(?![\\w,\\d])"
 	}
 	{
-		name: "keyword.numeric.ChatScript"
-		match: "(?!\\s)((=(?!=)|\\+=|-=|\\*=|/=|\\%=|\\*\\*=|<<=|>>=|<<|>>|&=|\\^=|\\|=|\\|))"
 		comment: "Assigment"
-	}
-	{
 		name: "keyword.numeric.ChatScript"
-		match: "((?<![/,'\";=])\\B(-|\\+|/|\\*|%)(?![/,'\";=])\\B)"
-		comment: "Operators"
+		match: "(?!\\s)(=(?!=)|\\+=|-=|\\*=|/=|\\%=|\\*\\*=|<<=|>>=|>>>=|<<|>>|&=|\\^=|\\|=|\\|)"
 	}
 	{
+		comment: "Operators"
+		name: "keyword.numeric.ChatScript"
+		match: "(?:\\(|\\s+)(\\-|\\+|/|\\*|\\s%\\s)"
+	}
+	{
+		comment: "Response control"
 		name: "constant.language.ChatScript"
 		match: "#(RESPONSE_UPPERSTART|RESPONSE_REMOVESPACEBEFORECOMMA|RESPONSE_ALTERUNDERSCORES|ALL_RESPONSES|RESPONSE_REMOVETILDE)"
-		comment: "Response control"
 	}
 	{
-		name: "constant.language.ChatScript"
-		match: "#(DO_SUBSTITUTE_SYSTEM|DO_ESSENTIALS|DO_SUBSTITUTES|DO_CONTRACTIONS|DO_INTERJECTIONS|DO_BRITISH|DO_SPELLING|DO_TEXTING|DO_NOISE|DO_PRIVATE|DO_NUMBER_MERGE|DO_PROPERNAME_MERGE|DO_DATE_MERGE|NO_PROPER_SPELLCHECK|NO_LOWERCASE_PROPER_MERGE|DO_SPELLCHECK|DO_INTERJECTION_SPLITTING|DO_PARSE|DO_POSTAG|NO_IMPERATIVE|NO_WITHIN|NO_SENTENCE_END|NO_HYPHEN_END|NO_COLON_END|NO_SEMICOLON_END|STRICT_CASING|ONLY_LOWERCASE|TOKEN_AS_IS|SPLIT_QUOTE|UNTOUCHED_INPUT|JSON_DIRECT_FROM_OOB|DO_CONDITIONAL_POSTAG|NO_ERASE|DO_SPLIT_UNDERSCORE|MARK_LOWER|NO_INFER_QUESTION|LEAVE_QUOTE|JSON_DIRECT_OOB|NO_FIX_UTF|QUESTIONMARK)"
 		comment: "Token control"
+		name: "constant.language.ChatScript"
+		match: "#(DO_SUBSTITUTE_SYSTEM|DO_ESSENTIALS|DO_SUBSTITUTES|DO_CONTRACTIONS|DO_INTERJECTIONS|DO_BRITISH|DO_SPELLING|DO_TEXTING|DO_NOISE|DO_PRIVATE|DO_NUMBER_MERGE|DO_PROPERNAME_MERGE|DO_DATE_MERGE|NO_PROPER_SPELLCHECK|NO_LOWERCASE_PROPER_MERGE|DO_SPELLCHECK|DO_INTERJECTION_SPLITTING|DO_PARSE|DO_POSTAG|NO_IMPERATIVE|NO_WITHIN|NO_SENTENCE_END|NO_HYPHEN_END|NO_COLON_END|NO_SEMICOLON_END|STRICT_CASING|ONLY_LOWERCASE|TOKEN_AS_IS|SPLIT_QUOTE|UNTOUCHED_INPUT)"
 	}
 	{
-		name: "constant.language.ChatScript"
-		match: "(?!\\w)(#*)(OUTPUT_RAW|OUTPUT_RETURNVALUE_ONLY|OUTPUT_NOCOMMANUMBER|OUTPUT_NOQUOTES|OUTPUT_NOUNDERSCORE)\\b"
 		comment: "Print output codes"
+		name: "constant.language.ChatScript"
+		match: "(?!\\w)(#*)(OUTPUT_RAW|OUTPUT_RETURNVALUE_ONLY|OUTPUT_NOCOMMANUMBER|OUTPUT_NOQUOTES|OUTPUT_NOUNDERSCORE)"
 	}
 	{
-		name: "constant.language.ChatScript"
-		match: "(?!\\w)(#*)(NOFAIL|FAIL|CALL|RULE|LOOP|TOPIC|SENTENCE|INPUT|PLAN)\\b"
 		comment: "End/nofail codes"
+		name: "constant.language.ChatScript"
+		match: "(?!\\w)(#*)(NOFAIL|FAIL|CALL|RULE|LOOP|TOPIC|SENTENCE|INPUT|PLAN)"
 	}
 	{
-		name: "constant.language.ChatScript"
-		match: "(?!\\w)(#*)(POST|GET|TRACE_TCP|POSTU|GETU)\\b"
 		comment: "TCP open"
+		name: "constant.language.ChatScript"
+		match: "(?!\\w)(#*)(POST|GET|TRACE_TCP|POSTU|GETU)"
 	}
 	{
-		name: "constant.language.ChatScript"
-		match: "(?!\\w)(#*)(FILE|OPEN|CLOSE)\\b"
 		comment: "Logs"
+		name: "constant.language.ChatScript"
+		match: "(?!\\w)(#*)(FILE|OPEN|CLOSE)"
 	}
 	{
-		name: "constant.language.ChatScript"
-		match: "(?!\\w)(#*)(INDEX|VALUE)\\b"
 		comment: "Json"
+		name: "constant.language.ChatScript"
+		match: "(?!\\w)(#*)(INDEX|VALUE)"
 	}
 	{
-		name: "constant.language.ChatScript"
-		match: "(?!\\w)(#*)(NOUN|VERB|ADJECTIVE|ADVERB|PREPOSITION)\\b"
 		comment: "Words"
+		name: "constant.language.ChatScript"
+		match: "(?!\\w)(#*)(NOUN|VERB|ADJECTIVE|ADVERB|PREPOSITION)"
 	}
 	{
-		name: "constant.language.ChatScript"
-		match: "(?!\\w)(#*)(direct_s|direct_v|direct_o|direct_sv|direct_so|direct_vo|direct_svo|Unipropogate|FACTDEAD)\\b"
 		comment: "Facts"
+		name: "constant.language.ChatScript"
+		match: "(?!\\w)(#*)(direct_s|direct_v|direct_o|direct_sv|direct_so|direct_vo|direct_svo|Unipropogate|FACTDEAD)"
 	}
 	{
-		name: "constant.language.ChatScript"
-		match: "(?!\\w)(#*)(NOUN|VERB|ESSENTIAL_POS|ADJECTIVE|ADVERB|BASIC_POS|PREPOSITION|ESSENTIAL_FLAGS|CONJUNCTION_COORDINATE|CONJUNCTION_SUBORDINATE|CONJUNCTION|PREDETERMINER|DETERMINER|POSSESSIVE|PRONOUN_POSSESSIVE|POSSESSIVE_BITS|DETERMINER_BITS|COMMA|REQUIRE_CONCEPT|PAREN|PUNCTUATION|QUOTE|CURRENCY|ADJECTIVE_NORMAL|ADJECTIVE_NUMBER|ADJECTIVE_NOUN|ADJECTIVE_PARTICIPLE|ADJECTIVE_BITS|INTERJECTION|THERE_EXISTENTIAL|FOREIGN_WORD|TO_INFINITIVE|NOUN_ADJECTIVE|NOUN_SINGULAR|NOUN_PLURAL|NOUN_PROPER_SINGULAR|NOUN_PROPER_PLURAL|NOUN_GERUND|NOUN_NUMBER|NOUN_INFINITIVE|NOUN_PROPER|NORMAL_NOUN_BITS|NOUN_BITS|VERB_PRESENT|VERB_PRESENT_3PS|VERB_PRESENT_PARTICIPLE|VERB_PAST|VERB_PAST_PARTICIPLE|VERB_INFINITIVE|PARTICLE|VERB_BITS|PRONOUN_SUBJECT|PRONOUN_OBJECT|PRONOUN_BITS|AUX_DO|AUX_HAVE|AUX_BE|AUX_VERB_PRESENT|AUX_VERB_FUTURE|AUX_VERB_PAST|AUX_VERB_TENSES|AUX_VERB|STARTTAGS|AS_IS)\\b"
 		comment: "POS"
-	}
-	{
 		name: "constant.language.ChatScript"
-		match: "(?!\\w)(#*)(TOPRULES|PENDING|START|END|BOTH|BOT|USER|AUTOSPACE|HAS_SUBSTITUTE|CONCEPT|TOPIC)\\b"
-		comment: "Other special words"
+		match: "(?!\\w)(#*)(NOUN|VERB|ESSENTIAL_POS|ADJECTIVE|ADVERB|BASIC_POS|PREPOSITION|ESSENTIAL_FLAGS|CONJUNCTION_COORDINATE|CONJUNCTION_SUBORDINATE|CONJUNCTION|PREDETERMINER|DETERMINER|POSSESSIVE|PRONOUN_POSSESSIVE|POSSESSIVE_BITS|DETERMINER_BITS|COMMA|REQUIRE_CONCEPT|PAREN|PUNCTUATION|QUOTE|CURRENCY|ADJECTIVE_NORMAL|ADJECTIVE_NUMBER|ADJECTIVE_NOUN|ADJECTIVE_PARTICIPLE|ADJECTIVE_BITS|INTERJECTION|THERE_EXISTENTIAL|FOREIGN_WORD|TO_INFINITIVE|NOUN_ADJECTIVE|NOUN_SINGULAR|NOUN_PLURAL|NOUN_PROPER_SINGULAR|NOUN_PROPER_PLURAL|NOUN_GERUND|NOUN_NUMBER|NOUN_INFINITIVE|NOUN_PROPER|NORMAL_NOUN_BITS|NOUN_BITS|VERB_PRESENT|VERB_PRESENT_3PS|VERB_PRESENT_PARTICIPLE|VERB_PAST|VERB_PAST_PARTICIPLE|VERB_INFINITIVE|PARTICLE|VERB_BITS|PRONOUN_SUBJECT|PRONOUN_OBJECT|PRONOUN_BITS|AUX_DO|AUX_HAVE|AUX_BE|AUX_VERB_PRESENT|AUX_VERB_FUTURE|AUX_VERB_PAST|AUX_VERB_TENSES|AUX_VERB|STARTTAGS|AS_IS)"
 	}
 	{
+		comment: "Other special words"
+		name: "constant.language.ChatScript"
+		match: "(?!\\w)(#*)(TOPRULES|PENDING|START|END|BOTH|BOT|USER|AUTOSPACE|HAS_SUBSTITUTE|CONCEPT|TOPIC)"
+	}
+	{
+		contentName: "variable.ChatScript"
+		begin: "(\\^(addtopic|available|cleartopics|counttopic|gambit|getrule|hasgambit|keep|lastused|poptopic|refine|rejoinder|respond|retry|reuse|sequence|setrejoinder|topicflags|sleep))(\\()"
+		end: "\\)"
 		comment: "Built-in functions (topics)"
 		patterns: [
 			{
@@ -170,14 +168,14 @@ patterns: [
 				match: "."
 			}
 		]
-		begin: "(\\^(?i:(addtopic|available|cleartopics|counttopics|gambit|getrule|hasgambit|keep|lastused|next|poptopic|refine|rejoinder|respond|retry|reuse|sequence|setrejoinder|topicflags)))(\\()"
 		beginCaptures:
 			"1":
 				name: "support.function.ChatScript"
-		end: "\\)"
-		contentName: "variable.ChatScript"
 	}
 	{
+		contentName: "variable.ChatScript"
+		begin: "(\\^(mark|unmark|position|setposition|marked|setcanon|settag|setoriginal|setrole|savesentence|restoresentence))(\\()"
+		end: "\\)"
 		comment: "Built-in functions (marking)"
 		patterns: [
 			{
@@ -188,14 +186,14 @@ patterns: [
 				match: "."
 			}
 		]
-		begin: "(\\^(?i:(mark|unmark|position|setposition|marked)))(\\()"
 		beginCaptures:
 			"1":
 				name: "support.function.ChatScript"
-		end: "\\)"
-		contentName: "variable.ChatScript"
 	}
 	{
+		contentName: "variable.ChatScript"
+		begin: "(\\^(analyze|capitalized|input|isnornalword|original|removetokenflags|settokenflags|setwildcardindex|tokenize))(\\()"
+		end: "\\)"
 		comment: "Built-in functions (input)"
 		patterns: [
 			{
@@ -206,14 +204,14 @@ patterns: [
 				match: "."
 			}
 		]
-		begin: "(\\^(?i:(analyze|capitalized|input|original|position|removetokenflags|settokenflags|setwildcardindex|actualinputrange)))(\\()"
 		beginCaptures:
 			"1":
 				name: "support.function.ChatScript"
-		end: "\\)"
-		contentName: "variable.ChatScript"
 	}
 	{
+		contentName: "variable.ChatScript"
+		begin: "(\\^(compute|isnumber|timefromseconds|timeinfofromseconds|timetoeconds))(\\()"
+		end: "\\)"
 		comment: "Built-in functions (number)"
 		patterns: [
 			{
@@ -224,14 +222,14 @@ patterns: [
 				match: "."
 			}
 		]
-		begin: "(\\^(?i:(compute|timefromseconds|timeinfofromseconds|timetoeconds)))(\\()"
 		beginCaptures:
 			"1":
 				name: "support.function.ChatScript"
-		end: "\\)"
-		contentName: "variable.ChatScript"
 	}
 	{
+		contentName: "variable.ChatScript"
+		begin: "(\\^(flushoutput|insertprint|keephistory|lastsaid|print|preprint|repeat|reviseoutput))(\\()"
+		end: "\\)"
 		comment: "Built-in functions (output)"
 		patterns: [
 			{
@@ -242,14 +240,14 @@ patterns: [
 				match: "."
 			}
 		]
-		begin: "(\\^(?i:(flushoutput|insertprint|keephistory|lastsaid|print|preprint|repeat|reviseOutput|savesentence|restoresentence|notrace)))(\\()"
 		beginCaptures:
 			"1":
 				name: "support.function.ChatScript"
-		end: "\\)"
-		contentName: "variable.ChatScript"
 	}
 	{
+		contentName: "variable.ChatScript"
+		begin: "(\\^(response|responsequestion|responseruleid))(\\()"
+		end: "\\)"
 		comment: "Built-in functions (output access)"
 		patterns: [
 			{
@@ -260,14 +258,14 @@ patterns: [
 				match: "."
 			}
 		]
-		begin: "(\\^(?i:(response|responsequestion|responseruleid)))(\\()"
 		beginCaptures:
 			"1":
 				name: "support.function.ChatScript"
-		end: "\\)"
-		contentName: "variable.ChatScript"
 	}
 	{
+		contentName: "variable.ChatScript"
+		begin: "(\\^(postprintbefore|postprintafter))(\\()"
+		end: "\\)"
 		comment: "Built-in functions (print)"
 		patterns: [
 			{
@@ -278,14 +276,14 @@ patterns: [
 				match: "."
 			}
 		]
-		begin: "(\\^(?i:(postprintbefore|postprintafter|csboot|csshotdown)))(\\()"
 		beginCaptures:
 			"1":
 				name: "support.function.ChatScript"
-		end: "\\)"
-		contentName: "variable.ChatScript"
 	}
 	{
+		contentName: "variable.ChatScript"
+		begin: "(\\^(argument|callstack|clearmatch|command|end|eval|loop|fail|load|match|matches|nofail|notnull|norejoinder|nottrace|return|addcontext|clearcontext|incontext|authorized|csboot|csshutdown|cs_reboot|cs_topic_enter|cs_topic_exit))(\\()"
+		end: "\\)"
 		comment: "Built-in functions (control flow)"
 		patterns: [
 			{
@@ -296,14 +294,14 @@ patterns: [
 				match: "."
 			}
 		]
-		begin: "(\\^(?i:(argument|command|end|eval|loop|fail|load|match|nofail|notnull|norejoinder|nottrace|return|addcontext|incontext)))(\\()"
 		beginCaptures:
 			"1":
 				name: "support.function.ChatScript"
-		end: "\\)"
-		contentName: "variable.ChatScript"
 	}
 	{
+		contentName: "variable.ChatScript"
+		begin: "(\\^(environment|system|popen|tcpopen|export|import))(\\()"
+		end: "\\)"
 		comment: "Built-in functions (external access)"
 		patterns: [
 			{
@@ -314,14 +312,32 @@ patterns: [
 				match: "."
 			}
 		]
-		begin: "(\\^(?i:(system|popen|tcpopen|export|import|debug|log|environment)))(\\()"
 		beginCaptures:
 			"1":
 				name: "support.function.ChatScript"
-		end: "\\)"
-		contentName: "variable.ChatScript"
 	}
 	{
+		contentName: "variable.ChatScript"
+		begin: "(\\^(debug|log|memorymark|memoryfree|memorygc|result))(\\()"
+		end: "\\)"
+		comment: "Built-in functions (debugging)"
+		patterns: [
+			{
+				include: "$self"
+			}
+			{
+				name: "variable.ChatScript"
+				match: "."
+			}
+		]
+		beginCaptures:
+			"1":
+				name: "support.function.ChatScript"
+	}
+	{
+		contentName: "variable.ChatScript"
+		begin: "(\\^(jsonarrayinsert|jsonarraydelete|jsoncreate|jsondelete|jsongather|jsonkind|jsonlabel|jsonobjectinsert|jsonopen|jsonwrite|jsonparse|jsonpath|jsontree|jsonarraysize|jsonreadcvs|jsonundecodestring))(\\()"
+		end: "\\)"
 		comment: "Built-in functions (json)"
 		patterns: [
 			{
@@ -332,14 +348,14 @@ patterns: [
 				match: "."
 			}
 		]
-		begin: "(\\^(?i:(jsonarrayinsert|jsonarraydelete|jsoncreate|jsondelete|jsongather|jsonobjectinsert|jsonopen|jsonprint|jsonwrite|jsonparse|jsonpath|jsonarraysize|jsonobjectinsert|jsonlabel|jsonundecodestring|jsoncopy|jsonkind|jsonreadcvs|jsontree)))(\\()"
 		beginCaptures:
 			"1":
 				name: "support.function.ChatScript"
-		end: "\\)"
-		contentName: "variable.ChatScript"
 	}
 	{
+		contentName: "variable.ChatScript"
+		begin: "(\\^(burst|words|canon|extract|findtext|flags|intersectwords|join|actualinputrange|originalinputrange|properties|pos|decodeinputtoken|decodepos|layer|partofspeech|phrase|role|tally|rhyme|substitute|spell|sexed|uppercase|format|addproperty|define|hasanyproperty|hasallproperty|removeinternalflag|removeproperty|walkdictionary|iterator|wordatindex))(\\()"
+		end: "\\)"
 		comment: "Built-in functions (word manipulation)"
 		patterns: [
 			{
@@ -350,14 +366,14 @@ patterns: [
 				match: "."
 			}
 		]
-		begin: "(\\^(?i:(burst|words|canon|explode|extract|findtext|flags|intersectwords|join|properties|pos|decodeinputtoken|decodepos|partofspeech|role|tally|rhyme|substitute|spell|sexed|uppercase|addproperty|define|hasanyproperty|hasallproperty|removeinternalflag|removeproperty|walkdictionary|iterator|wordinconcept|setoriginal|setcanon|settag|setrole|tokenize)))(\\()"
 		beginCaptures:
 			"1":
 				name: "support.function.ChatScript"
-		end: "\\)"
-		contentName: "variable.ChatScript"
 	}
 	{
+		contentName: "variable.ChatScript"
+		begin: "(\\^(disable|enable|length|next|pick|reset))(\\()"
+		end: "\\)"
 		comment: "Built-in functions (multipurpose)"
 		patterns: [
 			{
@@ -368,14 +384,14 @@ patterns: [
 				match: "."
 			}
 		]
-		begin: "(\\^(?i:(disable|enable|length|pick|reset|clearcontext|authorized|callstack)))(\\()"
 		beginCaptures:
 			"1":
 				name: "support.function.ChatScript"
-		end: "\\)"
-		contentName: "variable.ChatScript"
 	}
 	{
+		contentName: "variable.ChatScript"
+		begin: "(\\^(findfact|query|first|last|sort|delete|nth|unpackfactref|save|addproperty|conceptlist|wordinconcept|createattribute|createfact|writefact|revisefact|field|find|findmarkedfact|flushfacts|gambittopics|intersectfacts|keywordtopics|makereal|pendingtopics|querytopics|removeproperty|unduplicate|uniquefacts))(\\()"
+		end: "\\)"
 		comment: "Built-in functions (facts)"
 		patterns: [
 			{
@@ -386,14 +402,14 @@ patterns: [
 				match: "."
 			}
 		]
-		begin: "(\\^(?i:(result|findfact|query|first|last|pick|sort|delete|length|nth|unpackfactref|save|addproperty|conceptlist|createattribute|createfact|writefact|revisefact|field|find|findmarkedfact|flushfacts|gambittopics|intersectfacts|keywordtopics|last|makereal|next|pendingtopics|pick|querytopics|removeproperty|reset|query|save|unduplicate|uniquefacts|unpackfactref|importfacts|serialize|deserialize|match)))(\\()"
 		beginCaptures:
 			"1":
 				name: "support.function.ChatScript"
-		end: "\\)"
-		contentName: "variable.ChatScript"
 	}
 	{
+		contentName: "none.ChatScript"
+		begin: "(\\^([\\w, \\-, \\_]+))(?:\\()"
+		end: "\\)"
 		comment: "User defined functions"
 		patterns: [
 			{
@@ -404,35 +420,34 @@ patterns: [
 				match: "."
 			}
 		]
-		begin: "(\\^([\\w, \\-, \\_]+))(?:\\()"
 		beginCaptures:
 			"1":
 				name: "none.ChatScript"
-		end: "\\)"
-		contentName: "none.ChatScript"
 	}
 	{
+		comment: "Print escapes"
 		name: "string.source.ChatScript"
-		match: "((\\\\[\\w,\\d,\\[,\\],\\(,$,-,\\+,_]+)|(\\\\([n,r,t,',\"]))|(\\\\\\)))"
-		comment: "Escaped characters"
+		match: "(\\\\[\\w,\\d,\\[,\\],\\(,$,\\-,\\+,_]+)|(\\\\([n,r,t]?))"
 	}
 	{
-		comment: "CS symbols rules"
+		contentName: "none.ChatScript"
+		begin: "(^s:|^u:|^t:|\\?:)\\s+([A-Z,\\-,\\_,\\d]*)\\s*\\((\\_?)"
+		end: "\\)"
+		comment: "Matching rules"
 		patterns: [
 			{
 				include: "$self"
 			}
 			{
-				name: "keyword.numeric.ChatScript"
-				match: "(\\*|<<|>>|==|\\!\\=|\\!|\\?|\\[|\\]|\\{|\\}|\\\"|'|<|>|_(?![a-z]))|(\\w+|-|~)"
 				captures:
 					"1":
 						name: "keyword.numeric.ChatScript"
 					"2":
 						name: "string.source.ChatScript"
+				name: "keyword.numeric.ChatScript"
+				match: "(\\*|<<|>>|==|\\!\\=|\\!|\\?|\\[|\\]|\\{|\\}|\\\"|\\'|<|>|\\_(?![a-z]))|(\\w|\\-|~+)"
 			}
 		]
-		begin: "(^s:|^u:|^t:|\\?:)\\s+([A-Z,\\-,\\_,\\d]*)\\s*\\((\\_?)"
 		beginCaptures:
 			"1":
 				name: "entity.name.function.ChatScript"
@@ -440,93 +455,59 @@ patterns: [
 				name: "entity.other.inherited-class.ChatScript"
 			"3":
 				name: "keyword.numeric.ChatScript"
-		end: "(?<!\\\\)\\)"
-		contentName: "none.ChatScript"
 	}
 	{
+		comment: "Gambit with no parentesis"
 		name: "entity.name.function.ChatScript"
 		match: "^t:\\s"
-		comment: "Gambit with no parentesis"
 	}
 	{
+		contentName: "none.ChatScript"
+		begin: "([a-q]:)\\s+([A-Z,\\-,\\_,\\d]*)\\s*(\\()"
+		end: "\\)"
 		comment: "Rejoinder rules"
 		patterns: [
 			{
 				include: "$self"
 			}
 			{
-				name: "keyword.numeric.ChatScript"
-				match: "(\\*|<<|>>|==|\\!\\=|\\!|\\?|\\[|\\]|\\{|\\}|\\\"|'|<|>|_(?![a-z]))|(\\w|-|~+)"
 				captures:
 					"1":
 						name: "keyword.numeric.ChatScript"
 					"2":
 						name: "string.source.ChatScript"
+				name: "keyword.numeric.ChatScript"
+				match: "(\\*|<<|>>|==|\\!\\=|\\!|\\?|\\[|\\]|\\{|\\}|\\\"|\\'|<|>|\\_(?![a-z]))|(\\w|\\-|~+)"
 			}
 		]
-		begin: "([a-q]:)\\s+([A-Z,\\-,\\_,\\d]*)\\s*(\\()"
 		beginCaptures:
 			"1":
 				name: "entity.name.function.ChatScript"
 			"2":
 				name: "entity.other.inherited-class.ChatScript"
-		end: "(\\))"
-		contentName: "none.ChatScript"
 	}
 	{
-		name: "none.ChatScript"
-		match: "(~[\\w,\\-,\\_]+)\\.([A-Z,\\-,\\_,\\d]*)"
 		comment: "Invoked rules"
 		captures:
 			"2":
 				name: "entity.other.inherited-class.ChatScript"
+		name: "none.ChatScript"
+		match: "(~[\\w,\\-,\\_]+)\\.([A-Z,\\-,\\_,\\d]*)"
 	}
 	{
-		comment: "Multiline double quotes strings elements"
-		patterns: [
-			{
-				include: "$self"
-			}
-			{
-				name: "string.source.ChatScript"
-				match: "."
-			}
-		]
-		begin: "(\\^(\")([\\s\\w\\W])*?)"
-		end: "(\")"
+		comment: "Indirect returns/sets"
 		name: "string.source.ChatScript"
+		match: "(\\^\\\".*\\\")|(\\^\\$+\\w+)"
 	}
 	{
-		name: "string.source.ChatScript"
-		match: "(\\^(\").+(\"))"
-		comment: "Strings double quotes elements"
-	}
-	{
-		comment: "Multiline single quotes strings elements"
-		patterns: [
-			{
-				include: "$self"
-			}
-			{
-				name: "string.source.ChatScript"
-				match: "."
-			}
-		]
-		begin: "(\\^(')([\\s\\w\\W])*?)"
-		end: "(')"
-		name: "string.source.ChatScript"
-	}
-	{
-		name: "string.source.ChatScript"
-		match: "(\\^(').+('))"
-		comment: "Strings single quotes elements"
-	}
-	{
+		comment: "Wildcard operator"
 		name: "keyword.numeric.ChatScript"
 		match: "\\*\\~?\\d"
-		comment: "Wildcard operator"
 	}
 	{
+		begin: "(concept:).*\\("
+		end: "\\)"
+		name: "none.ChatScript"
 		comment: "Concepts"
 		patterns: [
 			{
@@ -537,78 +518,89 @@ patterns: [
 				match: "."
 			}
 		]
-		begin: "(concept:).*\\("
 		beginCaptures:
 			"1":
 				name: "entity.name.function.ChatScript"
-		end: "\\)"
-		name: "none.ChatScript"
 	}
 	{
+		comment: "Describe"
 		name: "entity.name.function.ChatScript"
 		match: "(describe:)"
-		comment: "Describe"
 	}
 	{
+		comment: "Outputmacro"
 		name: "entity.name.function.ChatScript"
 		match: "(outputmacro:)"
-		comment: "Outputmacro"
 	}
 	{
+		comment: "Patternmacro"
 		name: "entity.name.function.ChatScript"
 		match: "(patternmacro:)"
-		comment: "Patternmacro"
 	}
 	{
+		comment: "Dualmacro"
 		name: "entity.name.function.ChatScript"
 		match: "(dualmacro:)"
-		comment: "Dualmacro"
 	}
 	{
+		comment: "Table"
 		name: "entity.name.function.ChatScript"
 		match: "(table:)"
-		comment: "Table"
 	}
 	{
-		name: "entity.name.function.ChatScript"
-		match: "(query:)"
-		comment: "Table"
-	}
-	{
-		name: "entity.name.function.ChatScript"
-		match: "(rename:)"
-		comment: "Rename"
-	}
-	{
+		comment: "Topic"
 		name: "entity.name.function.ChatScript"
 		match: "(topic:)"
-		comment: "Topic"
 	}
 	{
-		match: "(\\#\\#<<(?i:(ENGLISH|FRENCH|GERMAN|SPANISH))+)"
-		name: "constant.language.ChatScript"
-		comment: "Conditional compilation"
+		comment: "Tablemacro"
+		name: "entity.name.function.ChatScript"
+		match: "(tablemacro:)"
 	}
 	{
-		match: "(\\#(?i:(ENGLISH|FRENCH|GERMAN|SPANISH))+)"
-		name: "constant.language.ChatScript"
-		comment: "Conditional compilation single line"
+		comment: "Data"
+		name: "entity.name.function.ChatScript"
+		match: "(data:)"
 	}
 	{
-		begin: "(\\#\\#<<)"
-		name: "comment.line.number-sign.ChatScript"
-		end: "(\\#\\#>>)"
+		comment: "Rename"
+		name: "entity.name.function.ChatScript"
+		match: "(rename:)"
+	}
+	{
+		comment: "Replace"
+		name: "entity.name.function.ChatScript"
+		match: "(replace:)"
+	}
+	{
+		comment: "Query"
+		name: "entity.name.function.ChatScript"
+		match: "(query:)"
+	}
+	{
+		comment: "Canon"
+		name: "entity.name.function.ChatScript"
+		match: "(canon:)"
+	}
+	{
+		comment: "Plan"
+		name: "entity.name.function.ChatScript"
+		match: "(plan:)"
+	}
+	{
+		comment: "Bot"
+		name: "entity.name.function.ChatScript"
+		match: "(bot:)"
+	}
+	{
 		comment: "Multiline comments"
-	}
-	{
-		match: "(\\#\\#>>)"
-		name: "constant.language.ChatScript"
-		comment: "Conditional compilation end"
-	}
-	{
+		begin: "(\\#\\#<<)"
+		end: "(\\#\\#>>)"
 		name: "comment.line.number-sign.ChatScript"
-		match: "(\\#(\\s|#)+.*)|(\\#!(\\s)+.*)|(\\#!x(\\s|#).*)"
+	}
+	{
 		comment: "Comments"
+		name: "comment.line.number-sign.ChatScript"
+		match: "(\\#\\s?.*)|(\\#!\\s?.*)|(\\#!x\\s?.*)"
 	}
 ]
-uuid: "217a687b-ce56-4078-8034-5b1303f17a77"

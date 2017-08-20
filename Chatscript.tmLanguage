@@ -16,7 +16,7 @@
 			<key>comment</key>
 			<string>System variables (date &amp; time &amp; numbers)</string>
 			<key>match</key>
-			<string>(\%)(?i:(date|daynumber|fulltime|timenumbers|leapyear|daylightsavings|minute|month|monthname|second|volleytime|week|year|rand|zulutime|day|time))</string>
+			<string>(\%)(date|day|daynumber|fulltime|hour|timenumbers|leapyear|daylightsavings|minute|month|monthname|second|volleytime|time|week|year|zulutime)</string>
 			<key>name</key>
 			<string>constant.numeric.ChatScript</string>
 		</dict>
@@ -24,7 +24,7 @@
 			<key>comment</key>
 			<string>System variables (user input)</string>
 			<key>match</key>
-			<string>(\%)(?i:(inputrejoinder|bot|revisedinput|command|foreign|impliedyou|input|ip|length|more|morequestion|originalinput|originalsentence|parsed|question|quotation|sentence|tense|userfirstline|user|userinput|voice))</string>
+			<string>(\%)(bot|revisedinput|command|foreign|impliedyou|input|ip|language|length|more|morequestion|originalinput|originalsentence|parsed|question|quotation|sentence|tense|tokenflags|userfirstline|user|userinput|voice|rand)</string>
 			<key>name</key>
 			<string>constant.numeric.ChatScript</string>
 		</dict>
@@ -32,7 +32,7 @@
 			<key>comment</key>
 			<string>System variables (chatbot output)</string>
 			<key>match</key>
-			<string>(\%)(?i:(httpresponse|response|all|document|fact|freetext|freedict|freefact|maxmatchvariables|maxfactsets|host|regression|server|rule|topic|actualtopic|trace|outputrejoinder|lastquestion))</string>
+			<string>(\%)(inputrejoinder|lastoutput|lastquestion|outputrejoinder|response|all|crosstalk|document|fact|freetext|freedict|freefact|freeword|maxmatchvariables|maxfactsets|host|regression|server|rule|topic|actualtopic|trace|httpresponse|pid|restart|timeout)</string>
 			<key>name</key>
 			<string>constant.numeric.ChatScript</string>
 		</dict>
@@ -40,7 +40,7 @@
 			<key>comment</key>
 			<string>System variables (build data)</string>
 			<key>match</key>
-			<string>(\%)(?i:(dict|engine|os|script|version|pid|restart|language))</string>
+			<string>(\%)(dict|engine|os|script|version)</string>
 			<key>name</key>
 			<string>constant.numeric.ChatScript</string>
 		</dict>
@@ -48,7 +48,7 @@
 			<key>comment</key>
 			<string>Interchange variables</string>
 			<key>match</key>
-			<string>(\$)(?i:(cs_afterreset|cs_beforereset|cs_token|cs_response|cs_jsontimeout|cs_crashmsg|cs_abstract|cs_looplimit|cs_trace|cs_control_pre|cs_prepass|cs_control_main|cs_control_post|botprompt|userprompt|cs_crashmsg|cs_language|cs_token|cs_abstract|cs_prepass|cs_wildcardseparator|cs_userfactlimit|cs_response|cs_randindex|cs_utcoffset|cs_randindex|cs_bot|cs_login|\$db_error|\$findtext_start|\$tcpopen_error|\$document|cs_externaltag|cs_usermessagelimit|\$findtext_word|\$csmatch_start|\$csmatch_end|cs_botid))</string>
+			<string>(\$)(cs_afterreset|cs_beforereset|cs_token|cs_response|cs_jsontimeout|cs_crashmsg|cs_abstract|cs_looplimit|cs_trace|cs_control_pre|cs_prepass|cs_control_main|cs_control_post|cs_usermessagelimit|cs_externaltag|botprompt|userprompt|cs_language|cs_wildcardseparator|cs_userfactlimit|cs_randindex|cs_utcoffset|cs_bot|cs_login|cs_fullfloat|cs_botid|cs_numbers|cs_topicretrylimit|cs_saveusedjson|cs_proxycredentials|cs_proxyserver|cs_proxymethod|\$db_error|\$findtext_start|\$findtext_word|\$tcpopen_error|\$document|\$csmatch_start|\$csmatch_end|\$topic_retry_limit_exceeded)</string>
 			<key>name</key>
 			<string>constant.numeric.ChatScript</string>
 		</dict>
@@ -69,7 +69,7 @@
 			<key>comment</key>
 			<string>Input capture variables</string>
 			<key>match</key>
-			<string>(\s*)(\'?)(_\d+)\b</string>
+			<string>(\s*)(\'?)(_\d+)</string>
 			<key>name</key>
 			<string>constant.language.ChatScript</string>
 		</dict>
@@ -90,38 +90,29 @@
 			<string>variable.parameter.ChatScript</string>
 		</dict>
 		<dict>
-			<key>captures</key>
-			<dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>variable.parameter.ChatScript</string>
-				</dict>
-				<key>2</key>
-				<dict>
-					<key>name</key>
-					<string>none.ChatScript</string>
-				</dict>
-			</dict>
 			<key>comment</key>
 			<string>User variables</string>
 			<key>match</key>
-			<string>(\$[a-zA-Z\d_-]+)(\.[\w$-]+)?</string>
+			<string>\$[a-z,A-Z,\d,\-,_]+</string>
 			<key>name</key>
-			<string>none.ChatScript</string>
+			<string>variable.parameter.ChatScript∫∫</string>
 		</dict>
 		<dict>
 			<key>begin</key>
-			<string>((if|else\sif)(?:\s*)(?=\(+))|(else)(?:\s*)(?=\{|
-)</string>
+			<string>((if|else\sif)(?:\s*)(?=\(+))|(else\s*)(?=\{|\n)</string>
 			<key>beginCaptures</key>
 			<dict>
-				<key>2</key>
+				<key>1</key>
 				<dict>
 					<key>name</key>
 					<string>keyword.numeric.ChatScript</string>
 				</dict>
 				<key>3</key>
+				<dict>
+					<key>name</key>
+					<string>keyword.numeric.ChatScript</string>
+				</dict>
+				<key>5</key>
 				<dict>
 					<key>name</key>
 					<string>keyword.numeric.ChatScript</string>
@@ -141,7 +132,7 @@
 				</dict>
 				<dict>
 					<key>match</key>
-					<string>(\!|==|\b(AND|OR)\b|&gt;=|&lt;=|!=|&gt;|&lt;|\?)</string>
+					<string>(\!|==|\s(AND|OR)\s|&gt;=|&lt;=|\!=|&gt;|&lt;|\?)</string>
 					<key>name</key>
 					<string>keyword.numeric.ChatScript</string>
 				</dict>
@@ -151,7 +142,7 @@
 			<key>comment</key>
 			<string>Integers</string>
 			<key>match</key>
-			<string>(?&lt;!_)\-?\d+(?![\w\-+?&amp;])\b</string>
+			<string>\d+</string>
 			<key>name</key>
 			<string>constant.numeric.ChatScript</string>
 		</dict>
@@ -159,7 +150,7 @@
 			<key>comment</key>
 			<string>Boolean &amp; state</string>
 			<key>match</key>
-			<string>\b(null|true|false)\b[^"-=\$%&amp;\?]</string>
+			<string>\s(null|true|false)(?![\w,\d])</string>
 			<key>name</key>
 			<string>constant.numeric.ChatScript</string>
 		</dict>
@@ -167,7 +158,7 @@
 			<key>comment</key>
 			<string>Assigment</string>
 			<key>match</key>
-			<string>(?!\s)((=(?!=)|\+=|-=|\*=|/=|\%=|\*\*=|&lt;&lt;=|&gt;&gt;=|&lt;&lt;|&gt;&gt;|&amp;=|\^=|\|=|\|))</string>
+			<string>(?!\s)(=(?!=)|\+=|-=|\*=|/=|\%=|\*\*=|&lt;&lt;=|&gt;&gt;=|&gt;&gt;&gt;=|&lt;&lt;|&gt;&gt;|&amp;=|\^=|\|=|\|)</string>
 			<key>name</key>
 			<string>keyword.numeric.ChatScript</string>
 		</dict>
@@ -175,7 +166,7 @@
 			<key>comment</key>
 			<string>Operators</string>
 			<key>match</key>
-			<string>((?&lt;![/,'";=])\B(-|\+|/|\*|%)(?![/,'";=])\B)</string>
+			<string>(?:\(|\s+)(\-|\+|/|\*|\s%\s)</string>
 			<key>name</key>
 			<string>keyword.numeric.ChatScript</string>
 		</dict>
@@ -191,7 +182,7 @@
 			<key>comment</key>
 			<string>Token control</string>
 			<key>match</key>
-			<string>#(DO_SUBSTITUTE_SYSTEM|DO_ESSENTIALS|DO_SUBSTITUTES|DO_CONTRACTIONS|DO_INTERJECTIONS|DO_BRITISH|DO_SPELLING|DO_TEXTING|DO_NOISE|DO_PRIVATE|DO_NUMBER_MERGE|DO_PROPERNAME_MERGE|DO_DATE_MERGE|NO_PROPER_SPELLCHECK|NO_LOWERCASE_PROPER_MERGE|DO_SPELLCHECK|DO_INTERJECTION_SPLITTING|DO_PARSE|DO_POSTAG|NO_IMPERATIVE|NO_WITHIN|NO_SENTENCE_END|NO_HYPHEN_END|NO_COLON_END|NO_SEMICOLON_END|STRICT_CASING|ONLY_LOWERCASE|TOKEN_AS_IS|SPLIT_QUOTE|UNTOUCHED_INPUT|JSON_DIRECT_FROM_OOB|DO_CONDITIONAL_POSTAG|NO_ERASE|DO_SPLIT_UNDERSCORE|MARK_LOWER|NO_INFER_QUESTION|LEAVE_QUOTE|JSON_DIRECT_OOB|NO_FIX_UTF|QUESTIONMARK)</string>
+			<string>#(DO_SUBSTITUTE_SYSTEM|DO_ESSENTIALS|DO_SUBSTITUTES|DO_CONTRACTIONS|DO_INTERJECTIONS|DO_BRITISH|DO_SPELLING|DO_TEXTING|DO_NOISE|DO_PRIVATE|DO_NUMBER_MERGE|DO_PROPERNAME_MERGE|DO_DATE_MERGE|NO_PROPER_SPELLCHECK|NO_LOWERCASE_PROPER_MERGE|DO_SPELLCHECK|DO_INTERJECTION_SPLITTING|DO_PARSE|DO_POSTAG|NO_IMPERATIVE|NO_WITHIN|NO_SENTENCE_END|NO_HYPHEN_END|NO_COLON_END|NO_SEMICOLON_END|STRICT_CASING|ONLY_LOWERCASE|TOKEN_AS_IS|SPLIT_QUOTE|UNTOUCHED_INPUT)</string>
 			<key>name</key>
 			<string>constant.language.ChatScript</string>
 		</dict>
@@ -199,7 +190,7 @@
 			<key>comment</key>
 			<string>Print output codes</string>
 			<key>match</key>
-			<string>(?!\w)(#*)(OUTPUT_RAW|OUTPUT_RETURNVALUE_ONLY|OUTPUT_NOCOMMANUMBER|OUTPUT_NOQUOTES|OUTPUT_NOUNDERSCORE)\b</string>
+			<string>(?!\w)(#*)(OUTPUT_RAW|OUTPUT_RETURNVALUE_ONLY|OUTPUT_NOCOMMANUMBER|OUTPUT_NOQUOTES|OUTPUT_NOUNDERSCORE)</string>
 			<key>name</key>
 			<string>constant.language.ChatScript</string>
 		</dict>
@@ -207,7 +198,7 @@
 			<key>comment</key>
 			<string>End/nofail codes</string>
 			<key>match</key>
-			<string>(?!\w)(#*)(NOFAIL|FAIL|CALL|RULE|LOOP|TOPIC|SENTENCE|INPUT|PLAN)\b</string>
+			<string>(?!\w)(#*)(NOFAIL|FAIL|CALL|RULE|LOOP|TOPIC|SENTENCE|INPUT|PLAN)</string>
 			<key>name</key>
 			<string>constant.language.ChatScript</string>
 		</dict>
@@ -215,7 +206,7 @@
 			<key>comment</key>
 			<string>TCP open</string>
 			<key>match</key>
-			<string>(?!\w)(#*)(POST|GET|TRACE_TCP|POSTU|GETU)\b</string>
+			<string>(?!\w)(#*)(POST|GET|TRACE_TCP|POSTU|GETU)</string>
 			<key>name</key>
 			<string>constant.language.ChatScript</string>
 		</dict>
@@ -223,7 +214,7 @@
 			<key>comment</key>
 			<string>Logs</string>
 			<key>match</key>
-			<string>(?!\w)(#*)(FILE|OPEN|CLOSE)\b</string>
+			<string>(?!\w)(#*)(FILE|OPEN|CLOSE)</string>
 			<key>name</key>
 			<string>constant.language.ChatScript</string>
 		</dict>
@@ -231,7 +222,7 @@
 			<key>comment</key>
 			<string>Json</string>
 			<key>match</key>
-			<string>(?!\w)(#*)(INDEX|VALUE)\b</string>
+			<string>(?!\w)(#*)(INDEX|VALUE)</string>
 			<key>name</key>
 			<string>constant.language.ChatScript</string>
 		</dict>
@@ -239,7 +230,7 @@
 			<key>comment</key>
 			<string>Words</string>
 			<key>match</key>
-			<string>(?!\w)(#*)(NOUN|VERB|ADJECTIVE|ADVERB|PREPOSITION)\b</string>
+			<string>(?!\w)(#*)(NOUN|VERB|ADJECTIVE|ADVERB|PREPOSITION)</string>
 			<key>name</key>
 			<string>constant.language.ChatScript</string>
 		</dict>
@@ -247,7 +238,7 @@
 			<key>comment</key>
 			<string>Facts</string>
 			<key>match</key>
-			<string>(?!\w)(#*)(direct_s|direct_v|direct_o|direct_sv|direct_so|direct_vo|direct_svo|Unipropogate|FACTDEAD)\b</string>
+			<string>(?!\w)(#*)(direct_s|direct_v|direct_o|direct_sv|direct_so|direct_vo|direct_svo|Unipropogate|FACTDEAD)</string>
 			<key>name</key>
 			<string>constant.language.ChatScript</string>
 		</dict>
@@ -255,7 +246,7 @@
 			<key>comment</key>
 			<string>POS</string>
 			<key>match</key>
-			<string>(?!\w)(#*)(NOUN|VERB|ESSENTIAL_POS|ADJECTIVE|ADVERB|BASIC_POS|PREPOSITION|ESSENTIAL_FLAGS|CONJUNCTION_COORDINATE|CONJUNCTION_SUBORDINATE|CONJUNCTION|PREDETERMINER|DETERMINER|POSSESSIVE|PRONOUN_POSSESSIVE|POSSESSIVE_BITS|DETERMINER_BITS|COMMA|REQUIRE_CONCEPT|PAREN|PUNCTUATION|QUOTE|CURRENCY|ADJECTIVE_NORMAL|ADJECTIVE_NUMBER|ADJECTIVE_NOUN|ADJECTIVE_PARTICIPLE|ADJECTIVE_BITS|INTERJECTION|THERE_EXISTENTIAL|FOREIGN_WORD|TO_INFINITIVE|NOUN_ADJECTIVE|NOUN_SINGULAR|NOUN_PLURAL|NOUN_PROPER_SINGULAR|NOUN_PROPER_PLURAL|NOUN_GERUND|NOUN_NUMBER|NOUN_INFINITIVE|NOUN_PROPER|NORMAL_NOUN_BITS|NOUN_BITS|VERB_PRESENT|VERB_PRESENT_3PS|VERB_PRESENT_PARTICIPLE|VERB_PAST|VERB_PAST_PARTICIPLE|VERB_INFINITIVE|PARTICLE|VERB_BITS|PRONOUN_SUBJECT|PRONOUN_OBJECT|PRONOUN_BITS|AUX_DO|AUX_HAVE|AUX_BE|AUX_VERB_PRESENT|AUX_VERB_FUTURE|AUX_VERB_PAST|AUX_VERB_TENSES|AUX_VERB|STARTTAGS|AS_IS)\b</string>
+			<string>(?!\w)(#*)(NOUN|VERB|ESSENTIAL_POS|ADJECTIVE|ADVERB|BASIC_POS|PREPOSITION|ESSENTIAL_FLAGS|CONJUNCTION_COORDINATE|CONJUNCTION_SUBORDINATE|CONJUNCTION|PREDETERMINER|DETERMINER|POSSESSIVE|PRONOUN_POSSESSIVE|POSSESSIVE_BITS|DETERMINER_BITS|COMMA|REQUIRE_CONCEPT|PAREN|PUNCTUATION|QUOTE|CURRENCY|ADJECTIVE_NORMAL|ADJECTIVE_NUMBER|ADJECTIVE_NOUN|ADJECTIVE_PARTICIPLE|ADJECTIVE_BITS|INTERJECTION|THERE_EXISTENTIAL|FOREIGN_WORD|TO_INFINITIVE|NOUN_ADJECTIVE|NOUN_SINGULAR|NOUN_PLURAL|NOUN_PROPER_SINGULAR|NOUN_PROPER_PLURAL|NOUN_GERUND|NOUN_NUMBER|NOUN_INFINITIVE|NOUN_PROPER|NORMAL_NOUN_BITS|NOUN_BITS|VERB_PRESENT|VERB_PRESENT_3PS|VERB_PRESENT_PARTICIPLE|VERB_PAST|VERB_PAST_PARTICIPLE|VERB_INFINITIVE|PARTICLE|VERB_BITS|PRONOUN_SUBJECT|PRONOUN_OBJECT|PRONOUN_BITS|AUX_DO|AUX_HAVE|AUX_BE|AUX_VERB_PRESENT|AUX_VERB_FUTURE|AUX_VERB_PAST|AUX_VERB_TENSES|AUX_VERB|STARTTAGS|AS_IS)</string>
 			<key>name</key>
 			<string>constant.language.ChatScript</string>
 		</dict>
@@ -263,13 +254,13 @@
 			<key>comment</key>
 			<string>Other special words</string>
 			<key>match</key>
-			<string>(?!\w)(#*)(TOPRULES|PENDING|START|END|BOTH|BOT|USER|AUTOSPACE|HAS_SUBSTITUTE|CONCEPT|TOPIC)\b</string>
+			<string>(?!\w)(#*)(TOPRULES|PENDING|START|END|BOTH|BOT|USER|AUTOSPACE|HAS_SUBSTITUTE|CONCEPT|TOPIC)</string>
 			<key>name</key>
 			<string>constant.language.ChatScript</string>
 		</dict>
 		<dict>
 			<key>begin</key>
-			<string>(\^(?i:(addtopic|available|cleartopics|counttopics|gambit|getrule|hasgambit|keep|lastused|next|poptopic|refine|rejoinder|respond|retry|reuse|sequence|setrejoinder|topicflags)))(\()</string>
+			<string>(\^(addtopic|available|cleartopics|counttopic|gambit|getrule|hasgambit|keep|lastused|poptopic|refine|rejoinder|respond|retry|reuse|sequence|setrejoinder|topicflags|sleep))(\()</string>
 			<key>beginCaptures</key>
 			<dict>
 				<key>1</key>
@@ -300,7 +291,7 @@
 		</dict>
 		<dict>
 			<key>begin</key>
-			<string>(\^(?i:(mark|unmark|position|setposition|marked)))(\()</string>
+			<string>(\^(mark|unmark|position|setposition|marked|setcanon|settag|setoriginal|setrole|savesentence|restoresentence))(\()</string>
 			<key>beginCaptures</key>
 			<dict>
 				<key>1</key>
@@ -331,7 +322,7 @@
 		</dict>
 		<dict>
 			<key>begin</key>
-			<string>(\^(?i:(analyze|capitalized|input|original|position|removetokenflags|settokenflags|setwildcardindex|actualinputrange)))(\()</string>
+			<string>(\^(analyze|capitalized|input|isnornalword|original|removetokenflags|settokenflags|setwildcardindex|tokenize))(\()</string>
 			<key>beginCaptures</key>
 			<dict>
 				<key>1</key>
@@ -362,7 +353,7 @@
 		</dict>
 		<dict>
 			<key>begin</key>
-			<string>(\^(?i:(compute|timefromseconds|timeinfofromseconds|timetoeconds)))(\()</string>
+			<string>(\^(compute|isnumber|timefromseconds|timeinfofromseconds|timetoeconds))(\()</string>
 			<key>beginCaptures</key>
 			<dict>
 				<key>1</key>
@@ -393,7 +384,7 @@
 		</dict>
 		<dict>
 			<key>begin</key>
-			<string>(\^(?i:(flushoutput|insertprint|keephistory|lastsaid|print|preprint|repeat|reviseOutput|savesentence|restoresentence|notrace)))(\()</string>
+			<string>(\^(flushoutput|insertprint|keephistory|lastsaid|print|preprint|repeat|reviseoutput))(\()</string>
 			<key>beginCaptures</key>
 			<dict>
 				<key>1</key>
@@ -424,7 +415,7 @@
 		</dict>
 		<dict>
 			<key>begin</key>
-			<string>(\^(?i:(response|responsequestion|responseruleid)))(\()</string>
+			<string>(\^(response|responsequestion|responseruleid))(\()</string>
 			<key>beginCaptures</key>
 			<dict>
 				<key>1</key>
@@ -455,7 +446,7 @@
 		</dict>
 		<dict>
 			<key>begin</key>
-			<string>(\^(?i:(postprintbefore|postprintafter|csboot|csshotdown)))(\()</string>
+			<string>(\^(postprintbefore|postprintafter))(\()</string>
 			<key>beginCaptures</key>
 			<dict>
 				<key>1</key>
@@ -486,7 +477,7 @@
 		</dict>
 		<dict>
 			<key>begin</key>
-			<string>(\^(?i:(argument|command|end|eval|loop|fail|load|match|nofail|notnull|norejoinder|nottrace|return|addcontext|incontext)))(\()</string>
+			<string>(\^(argument|callstack|clearmatch|command|end|eval|loop|fail|load|match|matches|nofail|notnull|norejoinder|nottrace|return|addcontext|clearcontext|incontext|authorized|csboot|csshutdown|cs_reboot|cs_topic_enter|cs_topic_exit))(\()</string>
 			<key>beginCaptures</key>
 			<dict>
 				<key>1</key>
@@ -517,7 +508,7 @@
 		</dict>
 		<dict>
 			<key>begin</key>
-			<string>(\^(?i:(system|popen|tcpopen|export|import|debug|log|environment)))(\()</string>
+			<string>(\^(environment|system|popen|tcpopen|export|import))(\()</string>
 			<key>beginCaptures</key>
 			<dict>
 				<key>1</key>
@@ -548,7 +539,38 @@
 		</dict>
 		<dict>
 			<key>begin</key>
-			<string>(\^(?i:(jsonarrayinsert|jsonarraydelete|jsoncreate|jsondelete|jsongather|jsonobjectinsert|jsonopen|jsonprint|jsonwrite|jsonparse|jsonpath|jsonarraysize|jsonobjectinsert|jsonlabel|jsonundecodestring|jsoncopy|jsonkind|jsonreadcvs|jsontree)))(\()</string>
+			<string>(\^(debug|log|memorymark|memoryfree|memorygc|result))(\()</string>
+			<key>beginCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>support.function.ChatScript</string>
+				</dict>
+			</dict>
+			<key>comment</key>
+			<string>Built-in functions (debugging)</string>
+			<key>contentName</key>
+			<string>variable.ChatScript</string>
+			<key>end</key>
+			<string>\)</string>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>$self</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>.</string>
+					<key>name</key>
+					<string>variable.ChatScript</string>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>begin</key>
+			<string>(\^(jsonarrayinsert|jsonarraydelete|jsoncreate|jsondelete|jsongather|jsonkind|jsonlabel|jsonobjectinsert|jsonopen|jsonwrite|jsonparse|jsonpath|jsontree|jsonarraysize|jsonreadcvs|jsonundecodestring))(\()</string>
 			<key>beginCaptures</key>
 			<dict>
 				<key>1</key>
@@ -579,7 +601,7 @@
 		</dict>
 		<dict>
 			<key>begin</key>
-			<string>(\^(?i:(burst|words|canon|explode|extract|findtext|flags|intersectwords|join|properties|pos|decodeinputtoken|decodepos|partofspeech|role|tally|rhyme|substitute|spell|sexed|uppercase|addproperty|define|hasanyproperty|hasallproperty|removeinternalflag|removeproperty|walkdictionary|iterator|wordinconcept|setoriginal|setcanon|settag|setrole|tokenize)))(\()</string>
+			<string>(\^(burst|words|canon|extract|findtext|flags|intersectwords|join|actualinputrange|originalinputrange|properties|pos|decodeinputtoken|decodepos|layer|partofspeech|phrase|role|tally|rhyme|substitute|spell|sexed|uppercase|format|addproperty|define|hasanyproperty|hasallproperty|removeinternalflag|removeproperty|walkdictionary|iterator|wordatindex))(\()</string>
 			<key>beginCaptures</key>
 			<dict>
 				<key>1</key>
@@ -610,7 +632,7 @@
 		</dict>
 		<dict>
 			<key>begin</key>
-			<string>(\^(?i:(disable|enable|length|pick|reset|clearcontext|authorized|callstack)))(\()</string>
+			<string>(\^(disable|enable|length|next|pick|reset))(\()</string>
 			<key>beginCaptures</key>
 			<dict>
 				<key>1</key>
@@ -641,7 +663,7 @@
 		</dict>
 		<dict>
 			<key>begin</key>
-			<string>(\^(?i:(result|findfact|query|first|last|pick|sort|delete|length|nth|unpackfactref|save|addproperty|conceptlist|createattribute|createfact|writefact|revisefact|field|find|findmarkedfact|flushfacts|gambittopics|intersectfacts|keywordtopics|last|makereal|next|pendingtopics|pick|querytopics|removeproperty|reset|query|save|unduplicate|uniquefacts|unpackfactref|importfacts|serialize|deserialize|match)))(\()</string>
+			<string>(\^(findfact|query|first|last|sort|delete|nth|unpackfactref|save|addproperty|conceptlist|wordinconcept|createattribute|createfact|writefact|revisefact|field|find|findmarkedfact|flushfacts|gambittopics|intersectfacts|keywordtopics|makereal|pendingtopics|querytopics|removeproperty|unduplicate|uniquefacts))(\()</string>
 			<key>beginCaptures</key>
 			<dict>
 				<key>1</key>
@@ -703,9 +725,9 @@
 		</dict>
 		<dict>
 			<key>comment</key>
-			<string>Escaped characters</string>
+			<string>Print escapes</string>
 			<key>match</key>
-			<string>((\\[\w,\d,\[,\],\(,$,-,\+,_]+)|(\\([n,r,t,',"]))|(\\\)))</string>
+			<string>(\\[\w,\d,\[,\],\(,$,\-,\+,_]+)|(\\([n,r,t]?))</string>
 			<key>name</key>
 			<string>string.source.ChatScript</string>
 		</dict>
@@ -731,11 +753,11 @@
 				</dict>
 			</dict>
 			<key>comment</key>
-			<string>CS symbols rules</string>
+			<string>Matching rules</string>
 			<key>contentName</key>
 			<string>none.ChatScript</string>
 			<key>end</key>
-			<string>(?&lt;!\\)\)</string>
+			<string>\)</string>
 			<key>patterns</key>
 			<array>
 				<dict>
@@ -757,7 +779,7 @@
 						</dict>
 					</dict>
 					<key>match</key>
-					<string>(\*|&lt;&lt;|&gt;&gt;|==|\!\=|\!|\?|\[|\]|\{|\}|\"|'|&lt;|&gt;|_(?![a-z]))|(\w+|-|~)</string>
+					<string>(\*|&lt;&lt;|&gt;&gt;|==|\!\=|\!|\?|\[|\]|\{|\}|\"|\'|&lt;|&gt;|\_(?![a-z]))|(\w|\-|~+)</string>
 					<key>name</key>
 					<string>keyword.numeric.ChatScript</string>
 				</dict>
@@ -792,7 +814,7 @@
 			<key>contentName</key>
 			<string>none.ChatScript</string>
 			<key>end</key>
-			<string>(\))</string>
+			<string>\)</string>
 			<key>patterns</key>
 			<array>
 				<dict>
@@ -814,7 +836,7 @@
 						</dict>
 					</dict>
 					<key>match</key>
-					<string>(\*|&lt;&lt;|&gt;&gt;|==|\!\=|\!|\?|\[|\]|\{|\}|\"|'|&lt;|&gt;|_(?![a-z]))|(\w|-|~+)</string>
+					<string>(\*|&lt;&lt;|&gt;&gt;|==|\!\=|\!|\?|\[|\]|\{|\}|\"|\'|&lt;|&gt;|\_(?![a-z]))|(\w|\-|~+)</string>
 					<key>name</key>
 					<string>keyword.numeric.ChatScript</string>
 				</dict>
@@ -837,64 +859,10 @@
 			<string>none.ChatScript</string>
 		</dict>
 		<dict>
-			<key>begin</key>
-			<string>(\^(")([\s\w\W])*?)</string>
 			<key>comment</key>
-			<string>Multiline double quotes strings elements</string>
-			<key>end</key>
-			<string>(")</string>
-			<key>name</key>
-			<string>string.source.ChatScript</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>$self</string>
-				</dict>
-				<dict>
-					<key>match</key>
-					<string>.</string>
-					<key>name</key>
-					<string>string.source.ChatScript</string>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>comment</key>
-			<string>Strings double quotes elements</string>
+			<string>Indirect returns/sets</string>
 			<key>match</key>
-			<string>(\^(").+("))</string>
-			<key>name</key>
-			<string>string.source.ChatScript</string>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>(\^(')([\s\w\W])*?)</string>
-			<key>comment</key>
-			<string>Multiline single quotes strings elements</string>
-			<key>end</key>
-			<string>(')</string>
-			<key>name</key>
-			<string>string.source.ChatScript</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>$self</string>
-				</dict>
-				<dict>
-					<key>match</key>
-					<string>.</string>
-					<key>name</key>
-					<string>string.source.ChatScript</string>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>comment</key>
-			<string>Strings single quotes elements</string>
-			<key>match</key>
-			<string>(\^(').+('))</string>
+			<string>(\^\".*\")|(\^\$+\w+)</string>
 			<key>name</key>
 			<string>string.source.ChatScript</string>
 		</dict>
@@ -979,9 +947,25 @@
 		</dict>
 		<dict>
 			<key>comment</key>
-			<string>Table</string>
+			<string>Topic</string>
 			<key>match</key>
-			<string>(query:)</string>
+			<string>(topic:)</string>
+			<key>name</key>
+			<string>entity.name.function.ChatScript</string>
+		</dict>
+		<dict>
+			<key>comment</key>
+			<string>Tablemacro</string>
+			<key>match</key>
+			<string>(tablemacro:)</string>
+			<key>name</key>
+			<string>entity.name.function.ChatScript</string>
+		</dict>
+		<dict>
+			<key>comment</key>
+			<string>Data</string>
+			<key>match</key>
+			<string>(data:)</string>
 			<key>name</key>
 			<string>entity.name.function.ChatScript</string>
 		</dict>
@@ -995,27 +979,43 @@
 		</dict>
 		<dict>
 			<key>comment</key>
-			<string>Topic</string>
+			<string>Replace</string>
 			<key>match</key>
-			<string>(topic:)</string>
+			<string>(replace:)</string>
 			<key>name</key>
 			<string>entity.name.function.ChatScript</string>
 		</dict>
 		<dict>
 			<key>comment</key>
-			<string>Conditional compilation</string>
+			<string>Query</string>
 			<key>match</key>
-			<string>(\#\#&lt;&lt;(?i:(ENGLISH|FRENCH|GERMAN|SPANISH))+)</string>
+			<string>(query:)</string>
 			<key>name</key>
-			<string>constant.language.ChatScript</string>
+			<string>entity.name.function.ChatScript</string>
 		</dict>
 		<dict>
 			<key>comment</key>
-			<string>Conditional compilation single line</string>
+			<string>Canon</string>
 			<key>match</key>
-			<string>(\#(?i:(ENGLISH|FRENCH|GERMAN|SPANISH))+)</string>
+			<string>(canon:)</string>
 			<key>name</key>
-			<string>constant.language.ChatScript</string>
+			<string>entity.name.function.ChatScript</string>
+		</dict>
+		<dict>
+			<key>comment</key>
+			<string>Plan</string>
+			<key>match</key>
+			<string>(plan:)</string>
+			<key>name</key>
+			<string>entity.name.function.ChatScript</string>
+		</dict>
+		<dict>
+			<key>comment</key>
+			<string>Bot</string>
+			<key>match</key>
+			<string>(bot:)</string>
+			<key>name</key>
+			<string>entity.name.function.ChatScript</string>
 		</dict>
 		<dict>
 			<key>begin</key>
@@ -1029,17 +1029,9 @@
 		</dict>
 		<dict>
 			<key>comment</key>
-			<string>Conditional compilation end</string>
-			<key>match</key>
-			<string>(\#\#&gt;&gt;)</string>
-			<key>name</key>
-			<string>constant.language.ChatScript</string>
-		</dict>
-		<dict>
-			<key>comment</key>
 			<string>Comments</string>
 			<key>match</key>
-			<string>(\#(\s|#)+.*)|(\#!(\s)+.*)|(\#!x(\s|#).*)</string>
+			<string>(\#\s?.*)|(\#!\s?.*)|(\#!x\s?.*)</string>
 			<key>name</key>
 			<string>comment.line.number-sign.ChatScript</string>
 		</dict>
