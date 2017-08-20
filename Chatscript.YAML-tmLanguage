@@ -14,15 +14,15 @@ patterns:
 
 - comment: System variables (date & time & numbers)
   name: constant.numeric.ChatScript
-  match: '(\%)(date|day|daynumber|fulltime|timenumbers|leapyear|daylightsavings|minute|month|monthname|second|volleytime|time|week|year|rand)'
+  match: '(\%)(date|day|daynumber|fulltime|hour|timenumbers|leapyear|daylightsavings|minute|month|monthname|second|volleytime|time|week|year|zulutime)'
 
 - comment: System variables (user input)
   name: constant.numeric.ChatScript
-  match: '(\%)(bot|revisedinput|command|foreign|impliedyou|input|ip|length|more|morequestion|originalinput|originalsentence|parsed|question|quotation|sentence|tense|userfirstline|user|userinput|voice)'
+  match: '(\%)(bot|revisedinput|command|foreign|impliedyou|input|ip|language|length|more|morequestion|originalinput|originalsentence|parsed|question|quotation|sentence|tense|tokenflags|userfirstline|user|userinput|voice|rand)'
 
 - comment: System variables (chatbot output)
   name: constant.numeric.ChatScript
-  match: '(\%)(http_response|response|all|document|fact|freetext|freedict|freefact|maxmatchvariables|maxfactsets|host|regression|server|rule|topic|actualtopic|trace|outputrejoinder|lastquestion)'
+  match: '(\%)(inputrejoinder|lastoutput|lastquestion|outputrejoinder|response|all|crosstalk|document|fact|freetext|freedict|freefact|freeword|maxmatchvariables|maxfactsets|host|regression|server|rule|topic|actualtopic|trace|httpresponse|pid|restart|timeout)'
 
 - comment: System variables (build data)
   name: constant.numeric.ChatScript
@@ -30,7 +30,7 @@ patterns:
 
 - comment: Interchange variables
   name: constant.numeric.ChatScript
-  match: '(\$)(cs_afterreset|cs_beforereset|cs_token|cs_response|cs_jsontimeout|cs_crashmsg|cs_abstract|cs_looplimit|cs_trace|cs_control_pre|cs_prepass|cs_control_main|cs_control_post|botprompt|userprompt|cs_crashmsg|cs_language|cs_token|cs_abstract|cs_prepass|cs_wildcardseparator|cs_userfactlimit|cs_response|cs_randindex|cs_utcoffset|cs_randindex|cs_bot|cs_login|\$db_error|\$findtext_start|\$tcpopen_error|\$document)'
+  match: '(\$)(cs_afterreset|cs_beforereset|cs_token|cs_response|cs_jsontimeout|cs_crashmsg|cs_abstract|cs_looplimit|cs_trace|cs_control_pre|cs_prepass|cs_control_main|cs_control_post|cs_usermessagelimit|cs_externaltag|botprompt|userprompt|cs_language|cs_wildcardseparator|cs_userfactlimit|cs_randindex|cs_utcoffset|cs_bot|cs_login|cs_fullfloat|cs_botid|cs_numbers|cs_topicretrylimit|cs_saveusedjson|cs_proxycredentials|cs_proxyserver|cs_proxymethod|\$db_error|\$findtext_start|\$findtext_word|\$tcpopen_error|\$document|\$csmatch_start|\$csmatch_end|\$topic_retry_limit_exceeded)'
 
 - comment: Input capture variables
   name: constant.language.ChatScript
@@ -150,7 +150,7 @@ patterns:
 
 - comment: Built-in functions (topics)
   contentName: variable.ChatScript
-  begin: '(\^(addtopic|available|cleartopics|counttopics|gambit|getrule|hasgambit|keep|lastused|next|poptopic|refine|rejoinder|respond|retry|reuse|sequence|setrejoinder|topicflags))(\()'
+  begin: '(\^(addtopic|available|cleartopics|counttopic|gambit|getrule|hasgambit|keep|lastused|poptopic|refine|rejoinder|respond|retry|reuse|sequence|setrejoinder|topicflags|sleep))(\()'
   beginCaptures:
     '1': {name: support.function.ChatScript}
   end: '\)'
@@ -161,7 +161,7 @@ patterns:
 
 - comment: Built-in functions (marking)
   contentName: variable.ChatScript
-  begin: '(\^(mark|unmark|position|setposition|marked))(\()'
+  begin: '(\^(mark|unmark|position|setposition|marked|setcanon|settag|setoriginal|setrole|savesentence|restoresentence))(\()'
   beginCaptures:
     '1': {name: support.function.ChatScript}
   end: '\)'
@@ -172,7 +172,7 @@ patterns:
 
 - comment: Built-in functions (input)
   contentName: variable.ChatScript
-  begin: '(\^(analyze|capitalized|input|original|position|removetokenflags|settokenflags|setwildcardindex))(\()'
+  begin: '(\^(analyze|capitalized|input|isnornalword|original|removetokenflags|settokenflags|setwildcardindex|tokenize))(\()'
   beginCaptures:
     '1': {name: support.function.ChatScript}
   end: '\)'
@@ -183,7 +183,7 @@ patterns:
 
 - comment: Built-in functions (number)
   contentName: variable.ChatScript
-  begin: '(\^(compute|timefromseconds|timeinfofromseconds|timetoeconds))(\()'
+  begin: '(\^(compute|isnumber|timefromseconds|timeinfofromseconds|timetoeconds))(\()'
   beginCaptures:
     '1': {name: support.function.ChatScript}
   end: '\)'
@@ -194,7 +194,7 @@ patterns:
 
 - comment: Built-in functions (output)
   contentName: variable.ChatScript
-  begin: '(\^(flushoutput|insertprint|keephistory|lastsaid|print|preprint|repeat|reviseOutput|savesentence|restoresentence|notrace))(\()'
+  begin: '(\^(flushoutput|insertprint|keephistory|lastsaid|print|preprint|repeat|reviseoutput))(\()'
   beginCaptures:
     '1': {name: support.function.ChatScript}
   end: '\)'
@@ -216,7 +216,7 @@ patterns:
 
 - comment: Built-in functions (print)
   contentName: variable.ChatScript
-  begin: '(\^(postprintbefore|postprintafter|csboot|csshotdown))(\()'
+  begin: '(\^(postprintbefore|postprintafter))(\()'
   beginCaptures:
     '1': {name: support.function.ChatScript}
   end: '\)'
@@ -227,7 +227,7 @@ patterns:
 
 - comment: Built-in functions (control flow)
   contentName: variable.ChatScript
-  begin: '(\^(argument|command|end|eval|loop|fail|load|match|nofail|notnull|norejoinder|nottrace|return|addcontext|incontext))(\()'
+  begin: '(\^(argument|callstack|clearmatch|command|end|eval|loop|fail|load|match|matches|nofail|notnull|norejoinder|nottrace|return|addcontext|clearcontext|incontext|authorized|csboot|csshutdown|cs_reboot|cs_topic_enter|cs_topic_exit))(\()'
   beginCaptures:
     '1': {name: support.function.ChatScript}
   end: '\)'
@@ -238,7 +238,18 @@ patterns:
 
 - comment: Built-in functions (external access)
   contentName: variable.ChatScript
-  begin: '(\^(system|popen|tcpopen|export|import|debug|log))(\()'
+  begin: '(\^(environment|system|popen|tcpopen|export|import))(\()'
+  beginCaptures:
+    '1': {name: support.function.ChatScript}
+  end: '\)'
+  patterns:
+  - include: $self
+  - name: variable.ChatScript
+    match: .    
+
+- comment: Built-in functions (debugging)
+  contentName: variable.ChatScript
+  begin: '(\^(debug|log|memorymark|memoryfree|memorygc|result))(\()'
   beginCaptures:
     '1': {name: support.function.ChatScript}
   end: '\)'
@@ -249,7 +260,7 @@ patterns:
 
 - comment: Built-in functions (json)
   contentName: variable.ChatScript
-  begin: '(\^(jsonarrayinsert|jsonarraydelete|jsoncreate|jsondelete|jsongather|jsonobjectinsert|jsonopen|jsonprint|jsonwrite|jsonparse|jsonpath|jsonarraysize))(\()'
+  begin: '(\^(jsonarrayinsert|jsonarraydelete|jsoncreate|jsondelete|jsongather|jsonkind|jsonlabel|jsonobjectinsert|jsonopen|jsonwrite|jsonparse|jsonpath|jsontree|jsonarraysize|jsonreadcvs|jsonundecodestring))(\()'
   beginCaptures:
     '1': {name: support.function.ChatScript}
   end: '\)'
@@ -260,7 +271,7 @@ patterns:
 
 - comment: Built-in functions (word manipulation)
   contentName: variable.ChatScript
-  begin: '(\^(burst|words|canon|explode|extract|findtext|flags|intersectwords|join|properties|pos|decodeinputtoken|decodepos|partofspeech|role|tally|rhyme|substitute|spell|sexed|uppercase|addproperty|define|hasanyproperty|hasallproperty|removeinternalflag|removeproperty|walkdictionary|iterator))(\()'
+  begin: '(\^(burst|words|canon|extract|findtext|flags|intersectwords|join|actualinputrange|originalinputrange|properties|pos|decodeinputtoken|decodepos|layer|partofspeech|phrase|role|tally|rhyme|substitute|spell|sexed|uppercase|format|addproperty|define|hasanyproperty|hasallproperty|removeinternalflag|removeproperty|walkdictionary|iterator|wordatindex))(\()'
   beginCaptures:
     '1': {name: support.function.ChatScript}
   end: '\)'
@@ -271,7 +282,7 @@ patterns:
 
 - comment: Built-in functions (multipurpose)
   contentName: variable.ChatScript
-  begin: '(\^(disable|enable|length|pick|reset))(\()'
+  begin: '(\^(disable|enable|length|next|pick|reset))(\()'
   beginCaptures:
     '1': {name: support.function.ChatScript}
   end: '\)'
@@ -282,7 +293,7 @@ patterns:
 
 - comment: Built-in functions (facts)
   contentName: variable.ChatScript
-  begin: '(\^(result|findfact|query|first|last|pick|sort|delete|length|nth|unpackfactref|save|addproperty|conceptlist|createattribute|createfact|writefact|revisefact|field|find|findmarkedfact|flushfacts|gambittopics|intersectfacts|keywordtopics|last|makereal|next|pendingtopics|pick|querytopics|removeproperty|reset|query|save|unduplicate|uniquefacts|unpackfactref|importfacts))(\()'
+  begin: '(\^(findfact|query|first|last|sort|delete|nth|unpackfactref|save|addproperty|conceptlist|wordinconcept|createattribute|createfact|writefact|revisefact|field|find|findmarkedfact|flushfacts|gambittopics|intersectfacts|keywordtopics|makereal|pendingtopics|querytopics|removeproperty|unduplicate|uniquefacts))(\()'
   beginCaptures:
     '1': {name: support.function.ChatScript}
   end: '\)'
@@ -395,6 +406,38 @@ patterns:
 - comment: Topic
   name: entity.name.function.ChatScript
   match: '(topic:)'
+
+- comment: Tablemacro
+  name: entity.name.function.ChatScript
+  match: '(tablemacro:)'
+
+- comment: Data
+  name: entity.name.function.ChatScript
+  match: '(data:)'
+
+- comment: Rename
+  name: entity.name.function.ChatScript
+  match: '(rename:)'
+
+- comment: Replace
+  name: entity.name.function.ChatScript
+  match: '(replace:)'
+
+- comment: Query
+  name: entity.name.function.ChatScript
+  match: '(query:)'
+
+- comment: Canon
+  name: entity.name.function.ChatScript
+  match: '(canon:)'
+
+- comment: Plan
+  name: entity.name.function.ChatScript
+  match: '(plan:)'
+
+- comment: Bot
+  name: entity.name.function.ChatScript
+  match: '(bot:)'
 
 
 
