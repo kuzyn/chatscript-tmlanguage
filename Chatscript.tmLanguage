@@ -733,7 +733,7 @@
 		</dict>
 		<dict>
 			<key>begin</key>
-			<string>(^s:|^u:|^t:|\?:)\s+([A-Z,\-,\_,\d]*)\s*\((\_?)</string>
+			<string>(^\s*s:|^\s*u:|^\s*t:|^\s*\?:)\s+([A-Z,\-,\_,\d]*)\s*\((\_?)</string>
 			<key>beginCaptures</key>
 			<dict>
 				<key>1</key>
@@ -1019,7 +1019,7 @@
 		</dict>
 		<dict>
 			<key>begin</key>
-			<string>(\#\#&lt;&lt;)</string>
+			<string>(\#\#&lt;&lt;\s)</string>
 			<key>comment</key>
 			<string>Multiline comments</string>
 			<key>end</key>

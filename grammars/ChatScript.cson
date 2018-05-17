@@ -428,7 +428,7 @@ patterns: [
 		name: "string.source.ChatScript"
 	}
 	{
-		begin: "(^s:|^u:|^t:|\\?:)\\s+([A-Z,\\-,\\_,\\d]*)\\s*\\((\\_?)"
+		begin: "(^\\s*s:|^\\s*u:|^\\s*t:|^\\s*\\?:)\\s+([A-Z,\\-,\\_,\\d]*)\\s*\\((\\_?)"
 		beginCaptures:
 			"1":
 				name: "entity.name.function.ChatScript"
@@ -591,7 +591,7 @@ patterns: [
 		name: "entity.name.function.ChatScript"
 	}
 	{
-		begin: "(\\#\\#<<)"
+		begin: "(\\#\\#<<\\s)"
 		comment: "Multiline comments"
 		end: "(\\#\\#>>)"
 		name: "comment.line.number-sign.ChatScript"
